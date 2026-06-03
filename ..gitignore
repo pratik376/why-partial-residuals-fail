@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+
+checkpoints/
+owt_cache/
+
+train.bin
+val.bin
+
+.vscode/

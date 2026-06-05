@@ -7,4 +7,4 @@ python train.py --config Attn_Only_Res
 python train.py --config FFN_Only_Res
 
 python plot_results.py
-echo "All done — check ResidualExperiment/figures/"
+echo "All done — check figures/124M/"

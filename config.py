@@ -33,7 +33,7 @@ CONFIGS = [
     {"name": "FFN_Only_Res", "attn_res": False, "ffn_res": True, "color": "#ffd43b"},
 ]
 
-RESULTS_FILENAME = "residual_results_owt.json"
+RESULTS_FILENAME = "residual_results_124M.json"
 DEFAULT_BASE_DIR = "./ResidualExperiment"
 DEFAULT_DATA_DIR = "./owt_cache"
 

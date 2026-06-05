@@ -32,8 +32,8 @@ def savepub(fig, out_path: Path):
 
 def main():
     base_dir = Path(".")
-    results_file = base_dir / "ResidualExperiment" / "results" / RESULTS_FILENAME
-    fig_dir = base_dir / "ResidualExperiment" / "figures"
+    results_file = base_dir / "results" / RESULTS_FILENAME
+    fig_dir = base_dir / "figures" / "124M"
     fig_dir.mkdir(parents=True, exist_ok=True)
 
     with open(results_file) as f:

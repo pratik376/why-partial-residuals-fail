@@ -5,9 +5,9 @@
 
 Residual connections are a fundamental component of transformer architectures, yet it remains unclear whether the residual pathway around the attention block and the residual pathway around the feed-forward network (FFN) contribute independently to optimization.
 
-I investigate this question through controlled ablation studies on GPT-style language models trained on OpenWebText at approximately 10M and 124.4M parameters.
+I investigate this question through controlled ablation studies on GPT-style language models trained on TinyShakespeare at ~10M parameters and OpenWebText at ~124.4M parameters.
 
-Across both scales, removing either the attention residual pathway or the FFN residual pathway causes severe performance degradation. At 124.4M parameters, the Full Residual model achieves a validation perplexity of 33.1, while Attention-Only, FFN-Only, and No Residual variants degrade to approximately 1690–2000 perplexity. Similar qualitative behavior is observed at 10M parameters.
+Across both scales, removing either the attention residual pathway or the FFN residual pathway causes severe performance degradation. At 124.4M parameters, the Full Residual model achieves a validation perplexity of 33.1, while Attention-Only, FFN-Only, and No Residual variants degrade to approximately 1690–2000 perplexity. Similar qualitative behavior is observed at 10M parameters on TinyShakespeare (character-level tokenization).
 
 These results suggest that transformer residual pathways may function as a coupled optimization mechanism rather than independent architectural components. We further analyze gradient flow, hidden-state dynamics, and activation statistics to investigate potential explanations for this behavior.
 
@@ -17,7 +17,7 @@ These results suggest that transformer residual pathways may function as a coupl
 
 Residual connections are a defining component of modern transformer architectures, yet it remains unclear whether the residual pathway around the attention block and the residual pathway around the feed-forward network (FFN) contribute independently to optimization.
 
-This project investigates that question through a controlled ablation study on GPT-style language models trained on OpenWebText.
+This project investigates that question through a controlled ablation study on GPT-style language models trained across two settings: TinyShakespeare (~10M parameters) and OpenWebText (~124.4M parameters).
 
 The central question is:
 
@@ -37,9 +37,10 @@ Or do both pathways need to work together to support effective gradient propagat
 
 ## Experimental Setup
 
-### Dataset
+### Datasets
+* **Small scale (~10M):** TinyShakespeare — character-level tokenization, 65-token vocabulary
 
-* OpenWebText
+* **Medium scale (~124.4M):** OpenWebText — BPE tokenization, 50,257-token vocabulary (GPT-2)
 
 ### Model Scales
 
@@ -68,7 +69,7 @@ Or do both pathways need to work together to support effective gradient propagat
 * Cosine learning-rate decay
 * Gradient accumulation
 * Mixed precision training
-* GPT-2 tokenizer (50,257 vocabulary)
+* Character-level tokenizer for 10M experiment (65 vocab); GPT-2 BPE tokenizer for 124M experiment (50,257 vocab)
 
 ---
 
@@ -102,7 +103,7 @@ This suggests the phenomenon is not unique to a single model scale.
 
 ---
 
-## 10M Parameter Results
+## 10M Parameter Results (TinyShakespeare)
 
 | Configuration           | Validation Loss | Perplexity | Training Loss |
 | ----------------------- | --------------- | ---------- | ------------- |
@@ -188,7 +189,7 @@ This hypothesis remains under investigation and motivates future mechanistic ana
 
 ## Hardware Requirements
 
-### 10M Parameter Study
+### 10M Parameter Study (TinyShakespeare)
 
 * GPU: RTX 3090 / A100 recommended
 * VRAM: 12GB+
@@ -297,7 +298,7 @@ Running the training and plotting scripts will regenerate the reported figures a
 
 ## Conclusion
 
-Across both approximately 10M and 124.4M parameter GPT-style language models, preserving only the attention residual pathway or only the FFN residual pathway was insufficient to maintain strong performance.
+Across two distinct experimental settings — a ~10M parameter model on TinyShakespeare and a ~124.4M parameter model on OpenWebText, preserving only the attention residual pathway or only the FFN residual pathway was insufficient to maintain strong performance.
 
 The Attention-Only and FFN-Only variants consistently behaved much more like the fully residual-free model than the Full Residual model.
 
